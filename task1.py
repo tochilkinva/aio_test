@@ -1,3 +1,10 @@
+"""
+Простой пример работы асинхронных функций или корутин.
+Main создает задачи, а затем через первый wait запускается выполнение корутин.
+Каждая корутина возвращает результат.
+Если использовать asyncio.gather, то в итоге будет список с результатом.
+"""
+
 import asyncio
 import time
 import random
@@ -23,14 +30,14 @@ async def main(cities_):
     for task in tasks:
         result = await task
         print(f'{result} end')
-        
 
 
-cities = ['Moscow', 'St. Petersburg', 'Rostov-on-Don', 'Kaliningrad', 'Vladivostok',
-          'Minsk', 'Beijing', 'Delhi', 'Istanbul', 'Tokyo', 'London', 'New York']
+if __name__ == '__main__':
+    cities = ['Moscow', 'St. Petersburg', 'Rostov-on-Don', 'Kaliningrad', 'Vladivostok',
+            'Minsk', 'Beijing', 'Delhi', 'Istanbul', 'Tokyo', 'London', 'New York']
 
-print(time.strftime('%X'))
+    print(time.strftime('%X'))
 
-asyncio.run(main(cities))
+    asyncio.run(main(cities))
 
-print(time.strftime('%X'))
+    print(time.strftime('%X'))
