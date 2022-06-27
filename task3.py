@@ -1,3 +1,7 @@
+"""
+Простой пример создания бота Telegram
+"""
+
 import os
 import logging
 from aiogram import Bot, Dispatcher, executor, types

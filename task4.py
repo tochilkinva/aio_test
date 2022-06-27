@@ -1,3 +1,6 @@
+"""
+Простой пример создания бота Telegram с переключением состояний: name, age, gender
+"""
 import logging
 import os
 
@@ -35,6 +38,7 @@ class Form(StatesGroup):
     gender = State()  # Will be represented in storage as 'Form:gender'
 
 
+# Ask name
 @dp.message_handler(commands='start')
 async def cmd_start(message: types.Message):
     """
@@ -46,7 +50,7 @@ async def cmd_start(message: types.Message):
     await message.reply("Hi there! What's your name?")
 
 
-# You can use state '*' if you need to handle all states
+# Cancel handle. You can use state '*' if you need to handle all states
 @dp.message_handler(state='*', commands='cancel')
 @dp.message_handler(Text(equals='cancel', ignore_case=True), state='*')
 async def cancel_handler(message: types.Message, state: FSMContext):
@@ -64,6 +68,7 @@ async def cancel_handler(message: types.Message, state: FSMContext):
     await message.reply('Cancelled.', reply_markup=types.ReplyKeyboardRemove())
 
 
+# Get name. Ask age
 @dp.message_handler(state=Form.name)
 async def process_name(message: types.Message, state: FSMContext):
     """
@@ -85,6 +90,7 @@ async def process_age_invalid(message: types.Message):
     return await message.reply("Age gotta be a number.\nHow old are you? (digits only)")
 
 
+# Get age. Ask gender
 @dp.message_handler(lambda message: message.text.isdigit(), state=Form.age)
 async def process_age(message: types.Message, state: FSMContext):
     # Update state and data
@@ -98,7 +104,7 @@ async def process_age(message: types.Message, state: FSMContext):
 
     await message.reply("What is your gender?", reply_markup=markup)
 
-
+# Check gender
 @dp.message_handler(lambda message: message.text not in ["Male", "Female", "Other"], state=Form.gender)
 async def process_gender_invalid(message: types.Message):
     """
@@ -106,7 +112,7 @@ async def process_gender_invalid(message: types.Message):
     """
     return await message.reply("Bad gender name. Choose your gender from the keyboard.")
 
-
+# Get gender. Reply answers. Finish conversation
 @dp.message_handler(state=Form.gender)
 async def process_gender(message: types.Message, state: FSMContext):
     async with state.proxy() as data:

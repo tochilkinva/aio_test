@@ -88,15 +88,30 @@ async def handle(request):
 
     return web.Response(text=json.dumps(result, ensure_ascii=False))
 
+async def handle_echo(request):
+    """
+    Функция возвращающая запрос обратно:  /echo
+    """
+    logging.info(f'Поступил запрос echo')
+
+    test = await request.read()
+    # message.chat.id, message.text
+
+    result = {'request': test}
+
+    # return web.Response(text=json.dumps(result, ensure_ascii=False))
+    return web.Response(text=result)
 
 async def main():
     """
     Запускаем север на http://localhost:8080/
     Тестовый запрос http://localhost:8080/weather?city=москва
+    Эхо http://localhost:8080/echo
     """
     await create_table()
     app = web.Application()
     app.add_routes([web.get('/weather', handle)])
+    app.add_routes([web.get('/echo', handle_echo)])
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, 'localhost', 8080)
