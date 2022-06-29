@@ -1,5 +1,6 @@
 """
-Простой пример создания бота Telegram с обращением к другим сайтам по API: Webhook
+Простой пример создания бота Telegram с функцией Webhook. 
+Нужен сервер с реальным IP и доменом т.к все через интернет
 """
 
 import os
@@ -20,11 +21,8 @@ CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 API_TOKEN = TELEGRAM_TOKEN
 
 # webhook settings
-# WEBHOOK_HOST = 'https://your.domain'
-# WEBHOOK_PATH = '/path/to/api'
-# WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
-WEBHOOK_HOST = 'localhost:8080'
-WEBHOOK_PATH = '/echo'
+WEBHOOK_HOST = 'https://your.domain'
+WEBHOOK_PATH = '/path/to/api'
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 # webserver settings
