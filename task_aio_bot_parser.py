@@ -3,6 +3,7 @@
 Стэк: aiogram, asyncio, beatifulsoap
 """
 import asyncio
+from cgitb import html
 import os
 import logging
 
@@ -24,7 +25,7 @@ dp = Dispatcher(bot) # Диспетчер для бота
 
 # Включаем логирование. Пишем логи в файл example.log
 logging.basicConfig(
-    filename='example.log',
+    filename='task_aio_bot_parser.log',
     level=logging.DEBUG,
 )
 
@@ -39,6 +40,8 @@ async def get_news():
         async with session.get(url=url) as response:
             html_response = await response.text()
             print(html_response)
+            # распарсим html
+            # вернуть результат заголовки с сылками
 
 
 async def parser():
