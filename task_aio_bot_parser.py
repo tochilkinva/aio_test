@@ -3,7 +3,6 @@
 Стэк: aiogram, asyncio, beatifulsoap
 """
 import asyncio
-from cgitb import html
 import os
 import logging
 
