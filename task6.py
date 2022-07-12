@@ -43,7 +43,7 @@ html = '''
 
 def parse_posts(raw_text: str) -> dict:
     """Парсим посты с 3dnews.ru
-    arg: html str
+    arg: html as str
     return -> dict[post_number]: (post_text, post_href, post_img)
     """
     try:
@@ -56,12 +56,12 @@ def parse_posts(raw_text: str) -> dict:
             post_href = post_text.get("href")
             if post_href[:5] != 'https':
                 post_href = f'https://3dnews.ru{post_href}'
-            post_img = post.find('img', class_='imageInAllFeed').get('src')
-            post_img = f'https://3dnews.ru{post_img}'
+            # post_img = post.find('img', class_='imageInAllFeed').get('src')
+            # post_img = f'https://3dnews.ru{post_img}'
             all_posts[post_number] = (
                 post_text.text,
                 post_href,
-                post_img
+                # post_img
             )
         return all_posts
 
@@ -69,8 +69,10 @@ def parse_posts(raw_text: str) -> dict:
         raise Exception(
             f'Не удалось распарсить посты: {e}')
 
-# url = 'https://3dnews.ru/news/'
-# response = requests.get(url).text
-# print(parse_quotes(response))
 
-print(parse_posts(html))
+if __name__ == "__main__":
+	url = 'https://3dnews.ru/news/'
+	response = requests.get(url).text
+	print(parse_posts(response))
+
+	# print(parse_posts(html))

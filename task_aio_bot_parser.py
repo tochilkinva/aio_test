@@ -9,11 +9,11 @@ import logging
 from aiogram import Bot, types, Dispatcher, executor
 from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher.filters import Text
+from aiogram.utils.markdown import hlink
 
 from aiohttp import ClientSession
-
 from dotenv import load_dotenv
-
+from task6 import parse_posts
 
 load_dotenv()
 
@@ -30,33 +30,34 @@ logging.basicConfig(
 
 
 
-async def get_news():
+async def get_news() -> str:
     """
-    Запрашиваем 
+    Запрашиваем новости с 3dnews.ru и возвращаем HTML
+    :return: str
     """
     async with ClientSession() as session:
         url = f'https://3dnews.ru/news/'
         async with session.get(url=url) as response:
             html_response = await response.text()
-            print(html_response)
-            # распарсим html
-            # вернуть результат заголовки с сылками
+            return html_response
 
-
-async def parser():
-    """Функция асинхронной задержки"""
-    temp = await get_news()
-    return 'Done'
-
+async def get_and_parse_news() -> dict:
+    """Парсим HTML и возвращаем dict
+    :return: dict[post_number] = (
+        post_text.text,
+        post_href)
+    """
+    posts_html = await get_news() 
+    posts_dict = parse_posts(posts_html)
+    return posts_dict
 
 
 # Хэндлер на команду /test
 @dp.message_handler(commands="test")
 async def cmd_test(message: types.Message):
-    await message.answer("Тест старт")
-    result = await parser()
-    await message.reply(result)
-    await message.answer("Тест стоп")
+    posts_dict = await get_and_parse_news()
+    for key, value in posts_dict.items():
+        await message.answer(hlink(value[0], value[1]), parse_mode="HTML", disable_web_page_preview=False)
 
 
 @dp.message_handler(commands='news')
