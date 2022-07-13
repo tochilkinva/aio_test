@@ -1,5 +1,5 @@
 """
-Простой пример создания сервера на aiohttp для определения погоды в городе
+Простой пример создания сервера на aiohttp для определения погоды в городе и записи данных в базу
 Пример запроса http://localhost:8080/weather?city=москва
 """
 
@@ -87,6 +87,7 @@ async def handle(request):
     await save_to_db(city_ru, weather_ru)
 
     return web.Response(text=json.dumps(result, ensure_ascii=False))
+
 
 async def handle_echo(request):
     """
