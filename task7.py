@@ -1,21 +1,5 @@
-#+ Создание базы постов
-#+ id заголовок ссылка статус просмотрено или нет дата
-
-# периодическое по расписанию
-#+     пополнение базы постов
-#     Если в базе появились новые посты 
-#         то прислать уведомление и команду на новые посты
-
-# команда новости
-#+     поискать в базе
-#         есть в базе
-#             отправить 5 не просмотренных постов
-#         нет в базе
-#             сообщить что еще нет постов 
-
-
-# обработка голового сообщения и перевод его в текст
-# перевод текста в голосовое сообщение
+# Создание базы постов
+# id заголовок ссылка статус просмотрено или нет дата
 
 import aiosqlite
 import asyncio
@@ -37,9 +21,12 @@ async def save_to_db(post_id, title, url):
     Сохраняем пост в базу
     """
     async with aiosqlite.connect('3dnews.db') as db:
-        await db.execute('INSERT INTO posts VALUES (?, ?, ?, ?, ?)',
-                         (post_id, title, url, 0, datetime.now()))
-        await db.commit()
+        try:
+            await db.execute('INSERT INTO posts VALUES (?, ?, ?, ?, ?)',
+                            (post_id, title, url, 0, datetime.now()))
+            await db.commit()
+        except:
+            pass
 
 
 async def load_new_posts():
