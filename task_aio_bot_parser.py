@@ -141,7 +141,6 @@ async def sched_get_news_to_db() -> None:
     Функция для запроса постов и сохранения их в базе.
     Одинаковые посты не сохраняются
     """
-    print('Get news and save to DB')
     posts_dict = await get_and_parse_news()
     for key, value in posts_dict.items():
         await save_to_db(key, value[0], value[1])
@@ -153,11 +152,12 @@ async def cmd_news(message: types.Message):
     new_posts = await load_new_posts()
     if new_posts is None:
         await message.answer("Новых постов еще нет")
-    for key, value in new_posts.items():
-        await message.answer(hlink(value[0], value[1]),
-                             parse_mode="HTML",
-                             disable_web_page_preview=False
-                             )
+    else:
+        for key, value in new_posts.items():
+            await message.answer(hlink(value[0], value[1]),
+                                parse_mode="HTML",
+                                disable_web_page_preview=False
+                                )
 
 
 @dp.message_handler(commands="start")
@@ -182,6 +182,7 @@ async def on_startup_init(dp) -> None:
     Создаем базу, если ее нет
     """
     await create_table()
+    await sched_get_news_to_db()
 
 
 if __name__ == "__main__":
