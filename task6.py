@@ -2,9 +2,8 @@
 Парсер постов с 3dnews.ru
 '''
 
-from bs4 import BeautifulSoup
 import requests
-
+from bs4 import BeautifulSoup
 
 html = '''
 <div class="article-entry article-infeed marker_allfeed nImp0 nIcat9 cat_9 nIaft " id="1069432" data-count="1" data-type="0" data-rtype="0" data-cat="9" data-important="0" style="display:block">
@@ -18,7 +17,7 @@ html = '''
 	<div class="cntPrevWrapper">
 	        <div class="metaInfoWrapper"><span class="entry-date">04.07.2022 16:38 </span></div>
 	        <a name="1069432"></a><a class="entry-header" href="https://3dnews.ru/1069432/fitnesbraslet-xiaomi-mi-band-7-pro-osnashchyon-priyomnikom-gps-i-pulsoksimetrom"><h1>Xiaomi представила Mi Band 7 Pro — фитнес-браслет с большим экраном, GPS и ценой $60 </h1></a>
-	        <p>Китайская компания Xiaomi официально анонсировала трекер физической активности Mi Band 7 Pro. Устройство представляет собой нечто среднее между классическим фитнес-браслетом и смарт-часами.</p> 	
+	        <p>Китайская компания Xiaomi официально анонсировала трекер физической активности Mi Band 7 Pro. Устройство представляет собой нечто среднее между классическим фитнес-браслетом и смарт-часами.</p>
 	</div>
 	<script>window.yaParams.push( { "statByPubLoad": { "[1069432] Xiaomi представила Mi Band 7 Pro — фитнес-браслет с большим экраном, GPS и ценой $60": { "in-feed": 1 } } } );</script>
 </div>
@@ -34,7 +33,7 @@ html = '''
 	<div class="cntPrevWrapper">
 	        <div class="metaInfoWrapper"><span class="entry-date">04.07.2022 16:26 </span></div>
 	        <a name="1069431"></a><a class="entry-header" href="https://3dnews.ru/1069431/debyutiroval-smartfon-xiaomi-12s-ultra-s-kameroy-leica-na-osnove-1dyuymovogo-sensora"><h1>Представлен Xiaomi 12S Ultra — флагман за $900 с камерой Leica на огромном 1-дюймовом сенсоре </h1></a>
-	        <p>Официально представлен флагманский смартфон Xiaomi 12S Ultra, при разработке которого особое внимание было уделено возможностям фото- и видеосъёмки. Устройство получило мощную систему камер, разработанную в сотрудничестве со специалистами Leica.</p> 	
+	        <p>Официально представлен флагманский смартфон Xiaomi 12S Ultra, при разработке которого особое внимание было уделено возможностям фото- и видеосъёмки. Устройство получило мощную систему камер, разработанную в сотрудничестве со специалистами Leica.</p>
 	</div>
 	<script>window.yaParams.push( { "statByPubLoad": { "[1069431] Представлен Xiaomi 12S Ultra — флагман за $900 с камерой Leica на огромном 1-дюймовом сенсоре": { "in-feed": 1 } } } );</script>
 </div>
@@ -71,8 +70,7 @@ def parse_posts(raw_text: str) -> dict:
 
 
 if __name__ == "__main__":
-	url = 'https://3dnews.ru/news/'
-	response = requests.get(url).text
-	print(parse_posts(response))
-
-	# print(parse_posts(html))
+    url = 'https://3dnews.ru/news/'
+    response = requests.get(url).text
+    print(parse_posts(response))
+    # print(parse_posts(html))

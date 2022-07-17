@@ -1,5 +1,6 @@
 """
-Простой пример создания бота Telegram с переключением состояний: name, age, gender
+Простой пример создания бота Telegram с
+переключением состояний: name, age, gender
 """
 import logging
 import os
@@ -17,9 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
-
-
+GENDERS = ("Male", "Female", "Other")
 
 logging.basicConfig(level=logging.INFO)
 
@@ -87,7 +86,9 @@ async def process_age_invalid(message: types.Message):
     """
     If age is invalid
     """
-    return await message.reply("Age gotta be a number.\nHow old are you? (digits only)")
+    return await message.reply(
+        "Age gotta be a number.\nHow old are you? (digits only)"
+        )
 
 
 # Get age. Ask gender
@@ -104,13 +105,17 @@ async def process_age(message: types.Message, state: FSMContext):
 
     await message.reply("What is your gender?", reply_markup=markup)
 
+
 # Check gender
-@dp.message_handler(lambda message: message.text not in ["Male", "Female", "Other"], state=Form.gender)
+@dp.message_handler(lambda message: message.text not in GENDERS,
+                    state=Form.gender)
 async def process_gender_invalid(message: types.Message):
     """
     In this example gender has to be one of: Male, Female, Other.
     """
-    return await message.reply("Bad gender name. Choose your gender from the keyboard.")
+    return await message.reply(
+        "Bad gender name. Choose your gender from the keyboard.")
+
 
 # Get gender. Reply answers. Finish conversation
 @dp.message_handler(state=Form.gender)

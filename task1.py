@@ -6,8 +6,8 @@ Main создает задачи, а затем через первый wait з�
 """
 
 import asyncio
-import time
 import random
+import time
 
 
 async def get_weather(city):
@@ -33,8 +33,9 @@ async def main(cities_):
 
 
 if __name__ == '__main__':
-    cities = ['Moscow', 'St. Petersburg', 'Rostov-on-Don', 'Kaliningrad', 'Vladivostok',
-            'Minsk', 'Beijing', 'Delhi', 'Istanbul', 'Tokyo', 'London', 'New York']
+    cities = ['Moscow', 'St. Petersburg', 'Rostov-on-Don', 'Kaliningrad',
+              'Vladivostok', 'Minsk', 'Beijing', 'Delhi', 'Istanbul',
+              'Tokyo', 'London', 'New York']
 
     print(time.strftime('%X'))
 

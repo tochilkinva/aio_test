@@ -1,10 +1,12 @@
 # Создание базы постов
 # id заголовок ссылка статус просмотрено или нет дата
 
-import aiosqlite
 import asyncio
 import logging
 from datetime import datetime
+
+import aiosqlite
+
 
 async def create_table():
     """
@@ -23,7 +25,7 @@ async def save_to_db(post_id, title, url):
     async with aiosqlite.connect('3dnews.db') as db:
         try:
             await db.execute('INSERT INTO posts VALUES (?, ?, ?, ?, ?)',
-                            (post_id, title, url, 0, datetime.now()))
+                             (post_id, title, url, 0, datetime.now()))
             await db.commit()
         except:
             pass
@@ -51,16 +53,14 @@ async def set_post_status(post_id, status: int):
     """
     async with aiosqlite.connect('3dnews.db') as db:
         await db.execute('UPDATE posts SET status = ? WHERE post_id = ?',
-                        (status, post_id))
+                         (status, post_id))
         await db.commit()
-
 
 
 async def main(db):
     """
     Запускаем
     """
-
     await create_table()
     # await save_to_db(222, 'titl2', 'www.test2.ru')
     result = await load_new_posts()

@@ -1,10 +1,10 @@
 """
-Простой пример создания бота Telegram с функцией Webhook. 
+Простой пример создания бота Telegram с функцией Webhook.
 Нужен сервер с реальным IP и доменом т.к все через интернет
 """
 
-import os
 import logging
+import os
 
 from aiogram import Bot, types
 from aiogram.contrib.middlewares.logging import LoggingMiddleware

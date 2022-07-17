@@ -1,16 +1,17 @@
 """
-Простой пример создания сервера на aiohttp для определения погоды в городе и записи данных в базу
+Простой пример создания сервера на aiohttp для определения
+погоды в городе и записи данных в базу
 Пример запроса http://localhost:8080/weather?city=москва
 """
 
 
-import aiosqlite
 import asyncio
 import json
 import logging
-
-from aiohttp import ClientSession, web
 from datetime import datetime
+
+import aiosqlite
+from aiohttp import ClientSession, web
 
 
 async def create_table():
@@ -38,7 +39,7 @@ async def get_weather(city):
     Запрашиваем погоду у сервиса openweathermap через json
     """
     async with ClientSession() as session:
-        url = f'http://api.openweathermap.org/data/2.5/weather'
+        url = 'http://api.openweathermap.org/data/2.5/weather'
         params = {'q': city, 'APPID': '2a4ff86f9aaa70041ec8e82db64abf56'}
 
         async with session.get(url=url, params=params) as response:
@@ -58,7 +59,10 @@ async def get_translation(text, source, target):
     async with ClientSession() as session:
         url = 'https://libretranslate.de/translate'
 
-        data = {'q': text, 'source': source, 'target': target, 'format': 'text'}
+        data = {'q': text,
+                'source': source,
+                'target': target,
+                'format': 'text'}
 
         async with session.post(url, json=data) as response:
             translate_json = await response.json()
@@ -93,7 +97,7 @@ async def handle_echo(request):
     """
     Функция возвращающая запрос обратно:  /echo
     """
-    logging.info(f'Поступил запрос echo')
+    logging.info('Поступил запрос echo')
 
     test = await request.read()
     # message.chat.id, message.text
@@ -102,6 +106,7 @@ async def handle_echo(request):
 
     # return web.Response(text=json.dumps(result, ensure_ascii=False))
     return web.Response(text=result)
+
 
 async def main():
     """
