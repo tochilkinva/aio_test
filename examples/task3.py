@@ -11,7 +11,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
-CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
 
 bot = Bot(token=TELEGRAM_TOKEN)  # Объект бота

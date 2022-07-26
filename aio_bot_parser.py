@@ -1,12 +1,12 @@
 """
-Пример создания бота Telegram с функцией получения новостей с сайта 3dnews
-Стэк: aiogram, asyncio, beatifulsoap
+Пример создания асинхронного бота Telegram с функцией получения новостей от 3dnews.
+Стэк: aiogram, aiosqlite, aiohttp, apscheduler, beatifulsoap
 
 Алгоритм работы
 Каждые 30 минут получаем новости с https://3dnews.ru/news/.
-Парсим их и записываем в базу со статусом не прочитано.
+Парсим их и записываем в базу со статусом непрочитано.
 По команде /news отправляем в канал 5 постов и меняем им статус на прочитано.
-Если все посты прочитаны, то о=говорим что нет постов.
+Если все посты прочитаны, то говорим, что нет постов.
 """
 
 import logging
@@ -28,7 +28,7 @@ TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
 bot = Bot(token=TELEGRAM_TOKEN)  # Объект бота
 dp = Dispatcher(bot)  # Диспетчер для бота
 
-# Включаем логирование. Пишем логи в файл example.log
+# Включаем логирование. Пишем логи в файл task_aio_bot_parser.log
 logging.basicConfig(
     filename='task_aio_bot_parser.log',
     level=logging.DEBUG,
@@ -37,8 +37,8 @@ logging.basicConfig(
 
 def parse_posts(raw_text: str) -> dict:
     """Парсим посты с 3dnews.ru
-    arg: html as str
-    return -> dict[post_number]: (post_text, post_href, post_img)
+    :parm: html as str
+    :return: dict[post_number]: (post_text, post_href, post_img)
     """
     try:
         data = BeautifulSoup(raw_text, features='html.parser')
@@ -111,7 +111,7 @@ async def save_to_db(post_id, title, url) -> None:
 async def load_new_posts() -> dict:
     """
     Загружаем 5 новых постов из базы и ставим им статус просмотренных
-    :return -> None or dict[post_number]: (post_text, post_href)
+    :return: None or dict[post_number]: (post_text, post_href)
     """
     result = {}
     async with aiosqlite.connect('3dnews.db') as db:
