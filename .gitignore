@@ -132,3 +132,4 @@ dmypy.json
 voices/
 *.wav
 *.ogg
+ffmpeg.exe
