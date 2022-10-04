@@ -70,7 +70,11 @@ def parse_posts(raw_text: str) -> dict:
 
 
 if __name__ == "__main__":
-    url = 'https://3dnews.ru/news/'
+    # url = 'https://3dnews.ru/news/'
+    # response = requests.get(url).text
+    # print(parse_posts(response))
+    # # print(parse_posts(html))
+
+    url = 'https://www.ozon.ru/category/smartfony-15502/apple-26303000/?category_was_predicted=true&deny_category_prediction=true&from_global=true&text=iphone+13+pro+max'
     response = requests.get(url).text
-    print(parse_posts(response))
-    # print(parse_posts(html))
+    print(response)

@@ -129,7 +129,9 @@ dmypy.json
 .pyre/
 
 
+models/
 voices/
 *.wav
 *.ogg
+*.db
 ffmpeg.exe
